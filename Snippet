@@ -1,0 +1,30 @@
+import fingerprint_reader_sdk
+
+def connect_to_reader():
+    # Connect to the fingerprint reader using the SDK
+    reader = fingerprint_reader_sdk.initialize()
+    return reader
+
+def enroll_student(reader, student_id):
+    # Capture student's fingerprint and enroll in the fingerprint reader
+    fingerprint_template = reader.capture_fingerprint()
+    fingerprint_reader_sdk.store_template(student_id, fingerprint_template)
+
+def take_attendance(reader):
+    # Capture fingerprint and match against enrolled templates
+    fingerprint = reader.capture_fingerprint()
+    matched_student_id = fingerprint_reader_sdk.match_template(fingerprint)
+    if matched_student_id:
+        # Log the attendance with matched_student_id and current time
+
+def main():
+    reader = connect_to_reader()
+    # Enroll students with their unique student IDs
+    enroll_student(reader, "student1")
+    enroll_student(reader, "student2")
+    
+    # Take attendance
+    take_attendance(reader)
+
+if __name__ == "__main__":
+    main()
